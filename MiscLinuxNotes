@@ -1,5 +1,28 @@
-# Use the following to get the dependancies for loading GitHub
+# I'm new to Linux so the following are notes for how to get the script onto the EC2 instance
+# The script will copy the deployment file from the EC2 instance to the Elastic BeanStalk implementation
+
+# For use with tutorial
+# Deploying a High-Availability WordPress Website with an External Amazon RDS Database to Elastic Beanstalk
+# https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/php-hawordpress-tutorial.html?refid=gs_card
+
+# Use the following to install Git on the EC2 instance
 
 $ sudo su
 $ yum install git-core
 
+# Use this to copy the script from the Github repository 
+# I found wget was already installed on the EC2 instance
+
+wget   https://raw.githubusercontent.com/TravisMauck/AWS-Elastic-Beanstalk/master/CopyToEbS3 CopyToEbS3.sh
+
+# This makes it executable
+
+$ chmod +x CopyToEbS3.sh
+
+# To modify the script if needed
+
+$ nano CopyToEbS3.sh
+
+# To execute the script
+
+$ ./CopyToEbS3.sh
