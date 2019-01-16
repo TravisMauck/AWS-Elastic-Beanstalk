@@ -1,0 +1,5 @@
+# Use the following to get the dependancies for loading GitHub
+
+$ sudo su
+$ yum install git-core
+
