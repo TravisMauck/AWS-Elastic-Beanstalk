@@ -5,6 +5,26 @@
 # Deploying a High-Availability WordPress Website with an External Amazon RDS Database to Elastic Beanstalk
 # https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/php-hawordpress-tutorial.html?refid=gs_card
 
+# The CURL, WGET... command for loading WordPress work as is in the EC2 instance.
+# the following are take staight from the turtorial
+
+$ curl https://wordpress.org/wordpress-4.9.5.tar.gz -o wordpress.tar.gz
+$ wget https://github.com/aws-samples/eb-php-wordpress/releases/download/v1.1/eb-php-wordpress-v1.zip
+$ tar -xvf wordpress.tar.gz
+$ mv wordpress wordpress-beanstalk
+$ cd wordpress-beanstalk
+$ unzip ../eb-php-wordpress-v1.zip
+
+
+# to update the IP address with your external IP address
+$ cd .ebextensions
+$ nano dev.config
+# to update the VCP and subnets the default VPC id and subnet ids
+$ nano efs-create.config
+$ cd ..
+
+$ zip ../wordpress-beanstalk.zip -r * .[^.]*
+
 # Use the following to install Git on the EC2 instance
 
 $ sudo su
@@ -13,16 +33,23 @@ $ yum install git-core
 # Use this to copy the script from the Github repository 
 # I found wget was already installed on the EC2 instance
 
-wget   https://raw.githubusercontent.com/TravisMauck/AWS-Elastic-Beanstalk/master/CopyToEbS3 CopyToEbS3.sh
+# be sure to be in the root directory for this
+
+wget   https://raw.githubusercontent.com/TravisMauck/AWS-Elastic-Beanstalk/master/CopyToEbS3 CopyToEbS3
 
 # This makes it executable
 
-$ chmod +x CopyToEbS3.sh
+$ chmod +x CopyToEbS3
 
-# To modify the script if needed
+# To modify the script to contain the appropriate S3 bucket, applications name and environment name
 
-$ nano CopyToEbS3.sh
+$ nano CopyToEbS3
 
 # To execute the script
+# The EC2 instance needs to have sufficient authority
+# I assigned a role with full admin and it worked
 
-$ ./CopyToEbS3.sh
+# This time I had to assign a region even though last time I did not need to
+$ aws configure set region us-west-2 
+
+$ ./CopyToEbS3
