@@ -30,6 +30,16 @@ $ zip ../wordpress-beanstalk.zip -r * .[^.]*
 $ sudo su
 $ yum install git-core
 
+# If you want to get a folder do the following
+# First install svn then use svn to get the folder
+# from following url
+# https://stackoverflow.com/questions/7106012/download-a-single-folder-or-directory-from-a-github-repo
+
+$ sudo yum install subversion
+
+# replace "/tree/master" with "/trunk" from the Github folder URL
+$ svn checkout https://github.com/aws-samples/lambda-refarch-imagerecognition/trunk/webapp
+
 # Use this to copy the script from the Github repository 
 # I found wget was already installed on the EC2 instance
 
